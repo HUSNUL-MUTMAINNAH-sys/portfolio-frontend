@@ -127,7 +127,8 @@ class ApiClient {
   async submitMessage(data: {
     name: string;
     email: string;
-    message: string;
+    subject?: string;
+    content: string;
   }): Promise<{ success: boolean }> {
     return this.request(`${API_URL}/messages`, {
       method: 'POST',
@@ -135,7 +136,8 @@ class ApiClient {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-        content: data.message, // Backend expect 'content' not 'message'
+        subject: data.subject || '',
+        content: data.content,
       }),
     });
   }

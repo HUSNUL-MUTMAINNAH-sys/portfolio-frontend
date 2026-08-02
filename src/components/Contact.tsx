@@ -9,7 +9,7 @@ import Reveal from './Reveal'
 export default function Contact() {
   const { contact, loading } = useData()
   const { t } = useLanguage()
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', subject: '', content: '' })
   const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle')
 
   const onSubmit = async (e: FormEvent) => {
@@ -18,7 +18,7 @@ export default function Contact() {
     try {
       await api.submitMessage(form)
       setStatus('sent')
-      setForm({ name: '', email: '', message: '' })
+      setForm({ name: '', email: '', subject: '', content: '' })
       setTimeout(() => setStatus('idle'), 3000)
     } catch {
       setStatus('error')
@@ -96,12 +96,21 @@ export default function Contact() {
                 </div>
               </div>
               <div>
+                <label className="text-xs font-semibold text-ink/50 dark:text-white/50">Subject (optional)</label>
+                <input
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                  className="mt-1.5 w-full rounded-xl border border-line dark:border-white/15 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent transition-colors"
+                  placeholder="Project inquiry, collaboration, etc."
+                />
+              </div>
+              <div>
                 <label className="text-xs font-semibold text-ink/50 dark:text-white/50">{t('contact.message')}</label>
                 <textarea
                   required
                   rows={5}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  value={form.content}
+                  onChange={(e) => setForm({ ...form, content: e.target.value })}
                   className="mt-1.5 w-full rounded-xl border border-line dark:border-white/15 bg-transparent px-4 py-2.5 text-sm outline-none focus:border-accent transition-colors resize-none"
                   placeholder={t('contact.messagePlaceholder')}
                 />
