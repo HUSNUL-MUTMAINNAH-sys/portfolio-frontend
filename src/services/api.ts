@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://portfolio-backend-26natnwde-nana-106f.vercel.app/api';
 
 export interface Profile {
   name: string;
